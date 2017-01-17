@@ -75,6 +75,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
+    var cmd = message.split(" ");
     if (cmd[0] === "$lua" && cmd.length > 1) {
         var lua = message.substr(cmd[0].length+1)
         request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {
