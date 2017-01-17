@@ -1,5 +1,8 @@
 var fs = require('fs');
 var Discord = require('discord.io');
+var request = require('request');
+var moment = require('moment-timezone');
+
 
 var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
@@ -10,8 +13,11 @@ var bot = new Discord.Client({
 
 });
 
+moment.locale(); 
+
 
 bot.on('ready', function() {
+	console.log("TIME: " + moment().tz("America/Chicago").format('MMMM Do YYYY, h:mm:ss a'));
     console.log(bot.username + " - (" + bot.id + ")");
     // console.log(bot.servers);
     // for (var server in bot.servers){
@@ -70,8 +76,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
 		        message: "Invalid role."
 	        });
     	}        
-    }
-    
+    }    
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -79,7 +84,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     if (cmd[0] === "$lua" && cmd.length > 1) {
         var lua = message.substr(cmd[0].length+1)
         request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {
-            if (!error && response.response.statusCode==200) {
+            if (!error && response.statusCode==200) {
                 var data = JSON.parse(body)
                 if (data.error) {
                     bot.sendMessage({
