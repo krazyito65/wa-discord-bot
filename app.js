@@ -1,6 +1,10 @@
+var fs = require('fs');
 var Discord = require('discord.io');
+var data = fs.readFileSync('token', "utf8");
+var token =  data.toString().trim();
+
 var bot = new Discord.Client({
-    token: "MjcwNzE2NjI2NDY5NTE5Mzcy.C178BA.-r2Tpn_x9ULMt7cEG-cTgd9g6OY",
+    token: token,
     autorun: true,
 
 });
@@ -55,7 +59,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
 				bot.addToRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
 				bot.sendMessage({
 		            to: channelID,
-		            message: "Adding role: "+ vRole + " to " + selectedRole.name
+		            message: "Adding role: "+ vRole + " to " + user
 	        	});
 			}
     	} else {
