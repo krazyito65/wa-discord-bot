@@ -1,5 +1,6 @@
 var fs = require('fs');
 var Discord = require('discord.io');
+
 var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
 
@@ -47,7 +48,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     	
     	bot.sendMessage({
             to: channelID,
-            message: "Removing role: "+ vRole + " from " + selectedRole.name
+            message: "Removing role: "+ vRole + " from " + user
     	});
 
     } else if (cmd[0] === "$role" && cmd.length > 1) {
@@ -72,6 +73,30 @@ bot.on('message', function(user, userID, channelID, message, event) {
     }
     
 });
+
+bot.on('message', function(user, userID, channelID, message, event) {
+    if (cmd[0] === "$lua" && cmd.length > 1) {
+        var lua = message.substr(cmd[0].length+1)
+        request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {
+            if (!error && response.response.statusCode==200) {
+                var data = JSON.parse(body)
+                if (data.error) {
+                    bot.sendMessage({
+                        to: channelID,
+                        message: "*Error*: "+data.error
+                    })
+                }
+                else if (data.output) {
+                    bot.sendMessage({
+                        to: channelID,
+                        message: "*Lua Output*: "+data.output
+                    })
+                }
+            }
+        })
+    }
+});
+
 
 bot.on('message', function(user, userID, channelID, message, event) {
     if (message === "$two") {
