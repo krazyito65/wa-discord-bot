@@ -39,7 +39,9 @@ bot.on('message', function(user, userID, channelID, message, event) {
     cmd = cmd[0].substring(1);
     // console.log("cmd: " + cmd);
     // console.log("args: " + args);
-    commands[cmd](args, user, userID, channelID, bot);
+    if (commands[cmd]) {
+        commands[cmd](args, user, userID, channelID, bot);
+    }
 
 
 });
