@@ -7,6 +7,7 @@ var token =  data.toString().trim();
 // commands
 var role = require('./commands/role.js');
 var lua = require('./commands/lua.js');
+var wago = require('./commands/wago.js');
 
 
 var bot = new Discord.Client({
@@ -18,7 +19,8 @@ var prefix = '$'
 
 var commands = {
     role: role.role,
-    lua: lua.lua
+    lua: lua.lua,
+    wago: wago.wago
 }
 
 bot.on('ready', function() {
@@ -40,7 +42,8 @@ bot.on('message', function(user, userID, channelID, message, event) {
     // console.log("cmd: " + cmd);
     // console.log("args: " + args);
     if (commands[cmd]) {
-        commands[cmd](args, user, userID, channelID, bot);
+        console.log("Sending command: " + cmd)
+        commands[cmd](args.trim(), user, userID, channelID, bot);
     }
 
 
