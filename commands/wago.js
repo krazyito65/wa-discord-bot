@@ -1,6 +1,6 @@
 // var request = require('request');
 
-exports.wago = function lua(args, user, userID, channelID, bot){
+module.exports = function (args, user, userID, channelID, bot){
 	if (!args){
 		console.log("Sending wago link");
 		bot.sendMessage({

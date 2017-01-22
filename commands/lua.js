@@ -1,6 +1,6 @@
 var request = require('request');
 
-exports.lua = function lua(args, user, userID, channelID, bot){
+module.exports = function (args, user, userID, channelID, bot){
     if (args !== undefined && args.length > 0) {
         var lua = args.replace(/^(\n)?`+(LUA|lua)\s+|^(\n)?`+|(\n)?`+$/g, "")
         request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {

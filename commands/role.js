@@ -1,5 +1,5 @@
 
-exports.role = function role(args, user, userID, channelID, bot){
+module.exports = function (args, user, userID, channelID, bot){
 
     var serverID = bot.channels[channelID].guild_id; // grab server id
     
