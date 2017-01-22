@@ -12,17 +12,33 @@ var botFuncs = require('../bot.js')
 
 
 module.exports = function (args, user, userID, channelID, bot){
-	// var member = bot.getUser({
-	// 	userID: userID,
-	// });
-	// console.log(member);
+
+	// var userRoles = bot.servers[serverID].members[userID].roles
+	// var serverRoles = bot.servers[serverID].roles
+
+	var serverID = bot.channels[channelID].guild_id
+	var isMod = canManageMessages(bot, userID, serverID)
+
+	if (!macros[serverID]){
+		macros[serverID] = {}
+	}
+
+	// macros = macros[serverID]
+	var serverMacros = macros[serverID]
+
+	if (!isMod) {
+		console.log(user + "denied macro command")
+		botFuncs.sendMsg(channelID, "You do not have permisson to use that"); 
+		return
+	}
+
 	var args = args.split(" ");
 	var isValidOption = /(add|\+|edit)/.test(args[0])
 	var isRemove = /(remove|-)/.test(args[0])
 
 	if (args.length > 1 && isRemove) {
 		console.log("Removing command")
-		delete macros[args[1]]
+		delete serverMacros[args[1]]
 		jsonfile.writeFileSync(file, macros)
 		botFuncs.sendMsg(channelID, "Removed command: " + args[1])
 	} else if (args.length < 3 || ! isValidOption) {
@@ -30,7 +46,7 @@ module.exports = function (args, user, userID, channelID, bot){
 			botFuncs.sendMsg(channelID, args[0] +" is not a valid option. Please use: add | remove | edit | + | -"); 
 			return
 		}
-		botFuncs.sendMsg(channelID, "Not enough arguments.\nUsage: $macro (add/remove/edit) name output")
+		botFuncs.sendMsg(channelID, "Not enough arguments.\nUsage: $macro `(add/remove/edit)` `name` `output`")
 	} else {
 		var isAdd = /(add|\+)/.test(args[0])
 		var isEdit = /(edit)/.test(args[0])
@@ -46,7 +62,7 @@ module.exports = function (args, user, userID, channelID, bot){
 		if(isEdit){
 			if(macros[args[1]]) {
 				console.log("Editing command " + args[1])
-				macros[args[1]] = output.trim()
+				serverMacros[args[1]] = output.trim()
 				jsonfile.writeFileSync(file, macros)
 				botFuncs.sendMsg(channelID, "Edited command: " + args[1])
 			}else {
@@ -57,23 +73,34 @@ module.exports = function (args, user, userID, channelID, bot){
 		}
 		else if (isAdd) {
 			// check if the command exists.  If yes, edit the command.
-			if(!macros[args[1]]) {
+			if(!serverMacros[args[1]]) {
 
 				console.log("Adding command " + args[1])
-				macros[args[1]] = output.trim()
+				serverMacros[args[1]] = output.trim()
 				jsonfile.writeFileSync(file, macros)
 				botFuncs.sendMsg(channelID, "Adding command: " + args[1])
 			}
 			else {
-				console.log("Command already exists, if you are sure you want to overwrite use the edit command.")
+				console.log("Command already exists, if you are sure you want to overwrite use the `edit` command.")
 				botFuncs.sendMsg(channelID, "Command already exists, if you are sure you want to overwrite use the edit command.")
 			}
-
-			
-		}
-		else {
-			botFuncs.sendMsg(channelID, "Tell my programmer he sucks at coding the macro command.")
-			console.log("Tell my programmer he sucks at coding the macro command. This should never happen")
 		}
 	}
 }
+
+function canManageMessages(client, userID, serverID) {
+    var server = client.servers[serverID];
+    var member = server.members[userID];
+    return member.roles.some( roleID => server.roles[roleID].TEXT_MANAGE_MESSAGES );
+}
+
+
+// function searchRoles(serverRoles, userRoles) {
+// 	for (var sRoleID in serverRoles){
+// 		for (var uRoleID of userRoles){
+// 			if (uRoleID === sRoleID && serverRoles[uRoleID].TEXT_MANAGE_MESSAGES){
+// 				return true
+// 			}
+// 		}
+// 	}
+// }
