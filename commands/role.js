@@ -1,13 +1,14 @@
+var botFuncs = require('../bot.js')
+
+
 
 module.exports = function (args, user, userID, channelID, bot){
 
     var serverID = bot.channels[channelID].guild_id; // grab server id
     
     if (!args) {
-        bot.sendMessage({
-            to: channelID,
-            message: "Please select a role:\nDruid\nDeath Knight\nDemon Hunter\nHunter\nMage\nMonk\nPaladin\nPriest\nShaman\nRogue\nWarlock\nWarrior"
-        });
+
+        botFuncs.sendMsg(channelID, "Please select a role:\nDruid\nDeath Knight\nDemon Hunter\nHunter\nMage\nMonk\nPaladin\nPriest\nShaman\nRogue\nWarlock\nWarrior")
         return
     } 
 
@@ -19,12 +20,7 @@ module.exports = function (args, user, userID, channelID, bot){
 
         console.log("Removing role: " + vRole + " from " + user);
         bot.removeFromRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
-        
-        bot.sendMessage({
-            to: channelID,
-            message: "Removing role: "+ vRole + " from " + user
-        });
-
+        botFuncs.sendMsg(channelID, "Removing role: "+ vRole + " from " + user)
         return
     } 
 
@@ -32,19 +28,13 @@ module.exports = function (args, user, userID, channelID, bot){
     if (vRole) {
         var selectedRole = searchRoles(bot.servers[serverID].roles, vRole); // validate role exists on server; return role Object
         if (selectedRole) {
-                console.log("Adding role: " + vRole + " to " + user);
-                bot.addToRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
-                bot.sendMessage({
-                    to: channelID,
-                    message: "Adding role: "+ vRole + " to " + user
-                });
-            }
+            console.log("Adding role: " + vRole + " to " + user);
+            bot.addToRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
+            botFuncs.sendMsg(channelID, "Adding role: "+ vRole + " to " + user)
+        }
     } else {
         console.log(user + " input invalid role: " + vRole);
-        bot.sendMessage({
-            to: channelID,
-            message: "Invalid role."
-        });
+        botFuncs.sendMsg(channelID, "Invalid role.")
     }
 }
 

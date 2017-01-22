@@ -3,12 +3,15 @@ var Discord = require('discord.io');
 var moment = require('moment-timezone');
 var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
+var macros = require('./commands/macro.json')
 
 // commands
 var commands = {
     role: require('./commands/role.js'),
     lua: require('./commands/lua.js'),
-    wago: require('./commands/wago.js')
+    wago: require('./commands/wago.js'),
+    macro: require('./commands/macro.js'),
+
 }
 
 var bot = new Discord.Client({
@@ -39,7 +42,18 @@ bot.on('message', function(user, userID, channelID, message, event) {
     if (commands[cmd]) {
         console.log("Sending command: " + cmd)
         commands[cmd](args.trim(), user, userID, channelID, bot);
+    }else if (macros[cmd]){
+        //check macros table
+        bot.sendMessage({
+            to: channelID,
+            message: macros[cmd]
+        });
     }
-
-
 });
+
+exports.sendMsg = function (channelID, msg) {
+    bot.sendMessage({
+        to: channelID,
+        message: msg
+    });
+}
