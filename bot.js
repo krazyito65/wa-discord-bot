@@ -10,7 +10,7 @@ var commands = {
     role: require('./commands/role.js'),
     lua: require('./commands/lua.js'),
     wago: require('./commands/wago.js'),
-    macro: require('./commands/macro.js'),
+    //macro: require('./commands/macro.js'),
 
 }
 
