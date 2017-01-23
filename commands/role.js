@@ -66,7 +66,7 @@ function validateRole(iRole) {
 
     for (var vRole of roleList) {
         if (vRole == iRole) {
-            if (iRole == WAalpha) {return "WAalpha";}
+            if (iRole == "WAalpha") {return "WAalpha";}
             else {return toTitleCase(vRole);}
         }
     } 
