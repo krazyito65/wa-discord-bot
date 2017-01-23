@@ -12,7 +12,7 @@ module.exports = function (args, user, userID, channelID, bot){
         return
     } 
 
-    args = args.trim()
+    args = args.split(" ")
     if (args[0] == "remove" && args.length > 1){
 
         var vRole = validateRole(args[1].toLowerCase()); // check for valid role, return string
