@@ -19,7 +19,7 @@ var bot = new Discord.Client({
     autorun: true,
 
 });
-var prefix = '$'
+var prefix = '!'
 
 bot.on('ready', function() {
     console.log("===================================================");
