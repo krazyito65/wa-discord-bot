@@ -41,13 +41,12 @@ bot.on('message', function(user, userID, channelID, message, event) {
     }
 
     cmd = cmd[0].substring(1);
-    // console.log("cmd: " + cmd);
+    // console.log("cmd: " + cmd);ja
     // console.log("args: " + args);
     if (cmd === "help") {
         console.log("Sending command: " + cmd)
-        commands[cmd](args.trim(), macros, commands, channelID, bot, prefix);
-    }
-    else if (commands[cmd]) {
+        commands[cmd](args.trim(), macros, commands, user, userID, channelID, bot, prefix);
+    }else if (commands[cmd]) {
         console.log("Sending command: " + cmd)
         commands[cmd](args.trim(), user, userID, channelID, bot);
     }else if (serverMacros[cmd]){

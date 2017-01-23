@@ -2,7 +2,7 @@ var macros = require('./macro.json')
 var botFuncs = require('../bot.js')
 
 
-module.exports = function (args, macros, commands, channelID, bot, prefix){
+module.exports = function (args, macros, commands, user, userID, channelID, bot, prefix){
 	var serverID = bot.channels[channelID].guild_id; // grab server id
 	macros = macros[serverID]
 
@@ -13,7 +13,8 @@ module.exports = function (args, macros, commands, channelID, bot, prefix){
 		for (var macro in macros){
 			returnString += "\t" + prefix + macro +"\n"
 		}
-		botFuncs.sendMsg(channelID, returnString)
+		botFuncs.sendMsg(channelID, "Check your DM, <@" + userID + ">")
+		botFuncs.sendMsg(userID, returnString)
 	}else {
 		var returnString = 'List of current commands:\n'
 		console.log("Listing commands")
