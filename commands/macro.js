@@ -60,7 +60,7 @@ module.exports = function (args, user, userID, channelID, bot){
 	    }
 
 		if(isEdit){
-			if(macros[args[1]]) {
+			if(serverMacros[args[1]]) {
 				console.log("Editing command " + args[1])
 				serverMacros[args[1]] = output.trim()
 				jsonfile.writeFileSync(file, macros)
