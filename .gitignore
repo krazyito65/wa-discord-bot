@@ -1,4 +1,4 @@
 token
 log*
 node_module*
-./commands/macro.json
+**/commands/macro.json*
