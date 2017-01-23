@@ -10,18 +10,39 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 	if (/macros?/.test(args[0])){
 		var returnString = 'List of current macros:\n'
 		console.log("Listing macros")
+		macros = sortObject(macros)
 		for (var macro in macros){
 			returnString += "\t" + prefix + macro +"\n"
 		}
+
 		botFuncs.sendMsg(channelID, "Check your DM, <@" + userID + ">")
 		botFuncs.sendMsg(userID, returnString)
 	}else {
 		var returnString = 'List of current commands:\n'
 		console.log("Listing commands")
+		commands = sortObject(commands)
 		for (var cmd in commands){
 			if (cmd === "help") {cmd = "help [macros]"}
 			returnString += "\t" + prefix + cmd +"\n"
 		}
 		botFuncs.sendMsg(channelID, returnString)
 	}
+}
+
+function sortObject(o) {
+    var sorted = {},
+    key, a = [];
+
+    for (key in o) {
+        if (o.hasOwnProperty(key)) {
+            a.push(key);
+        }
+    }
+
+    a.sort();
+
+    for (key = 0; key < a.length; key++) {
+        sorted[a[key]] = o[a[key]];
+    }
+    return sorted;
 }
