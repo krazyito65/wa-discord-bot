@@ -50,7 +50,7 @@ function searchRoles(serverRoles, inputRole) {
 
 
 function validateRole(iRole) {
-    var roleList = ["druid", "death knight", "demon hunter", "hunter", "mage", "monk", "paladin", "priest", "shaman", "rogue", "warlock", "warrior"];
+    var roleList = ["druid", "death knight", "demon hunter", "hunter", "mage", "monk", "paladin", "priest", "shaman", "rogue", "warlock", "warrior", "WAalpha"];
 
     switch(true) {
         case /dk|death/.test(iRole):
@@ -59,11 +59,15 @@ function validateRole(iRole) {
         case /dh|demon/.test(iRole):
             iRole = "demon hunter";
             break;
+        case /alpha/.test(iRole):
+            iRole = "waalpha";
+            break;
     }
 
     for (var vRole of roleList) {
         if (vRole == iRole) {
-            return toTitleCase(vRole);
+            if (iRole == waalpha) {return "WAalpha";}
+            else {return toTitleCase(vRole);}
         }
     } 
 }
