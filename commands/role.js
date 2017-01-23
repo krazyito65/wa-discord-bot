@@ -60,13 +60,13 @@ function validateRole(iRole) {
             iRole = "demon hunter";
             break;
         case /alpha/.test(iRole):
-            iRole = "waalpha";
+            iRole = "WAalpha";
             break;
     }
 
     for (var vRole of roleList) {
         if (vRole == iRole) {
-            if (iRole == waalpha) {return "WAalpha";}
+            if (iRole == WAalpha) {return "WAalpha";}
             else {return toTitleCase(vRole);}
         }
     } 
