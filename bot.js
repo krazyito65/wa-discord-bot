@@ -31,6 +31,7 @@ bot.on('ready', function() {
 // Main message handler-
 bot.on('message', function(user, userID, channelID, message, event) {
     if (message[0] !== prefix) {return}
+    else if (userID === bot.id) {return}
     var cmd = message.split(" ");
     var args = '';
     var serverID = bot.channels[channelID].guild_id
