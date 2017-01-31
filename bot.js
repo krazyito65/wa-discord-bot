@@ -14,6 +14,7 @@ var commands = {
     lua: require('./commands/lua.js'),
     wago: require('./commands/wago.js'),
     macro: require('./commands/macro.js'),
+    ping: require('./commands/ping.js')
 }
 
 var bot = new Discord.Client({
