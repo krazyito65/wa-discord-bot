@@ -1,17 +1,15 @@
-var macros = require('./macro.json')
 var botFuncs = require('../bot.js')
-
 
 module.exports = function (args, macros, commands, user, userID, channelID, bot, prefix){
 	var serverID = bot.channels[channelID].guild_id; // grab server id
-	macros = macros[serverID]
+	serverMacros = macros.getData("/"+serverID)
 
 	var args = args.split(" ");
 	if (/macros?/.test(args[0])){
 		var returnString = 'List of current macros:\n'
 		console.log("Listing macros")
-		macros = sortObject(macros)
-		for (var macro in macros){
+		serverMacros = sortObject(serverMacros)
+		for (var macro in serverMacros){
 			returnString += "\t" + prefix + macro +"\n"
 		}
 

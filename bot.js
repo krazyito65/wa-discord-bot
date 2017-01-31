@@ -3,7 +3,9 @@ var Discord = require('discord.io');
 var moment = require('moment-timezone');
 var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
-var macros = require('./commands/macro.json')
+var JsonDB = require('node-json-db');
+var macros = new JsonDB("./data/macros", true, true);
+
 
 // commands
 var commands = {
@@ -35,7 +37,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     var cmd = message.split(" ");
     var args = '';
     var serverID = bot.channels[channelID].guild_id
-    var serverMacros = macros[serverID]
+    var serverMacros = macros.getData("/"+serverID)
 
     for (var i = 1; i < cmd.length; i++) {
         args += cmd[i] + " ";
