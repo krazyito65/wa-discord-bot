@@ -44,7 +44,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     var args = '';
     var serverID = bot.channels[channelID].guild_id
     var serverMacros = macros.getData("/"+serverID)
-    console.log(serverMacros)
+    //console.log(serverMacros)
     for (var i = 1; i < cmd.length; i++) {
         args += cmd[i] + " ";
     }
