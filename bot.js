@@ -37,7 +37,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
 	timer = setTimeout(function() { 
 		bot.connect();
 		console.log("Time'd out.  Reconnecting")
-	}, 600*1000)
+	}, 600*1000);
 	if (message[0] !== prefix) {return}
     else if (userID === bot.id) {return}
     var cmd = message.split(" ");
@@ -45,7 +45,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
     var serverID = bot.channels[channelID].guild_id
     var serverMacros;
     try { serverMacros = macros.getData("/"+serverID)}
-    catch(error) { macros.push(serverID, {})}
+    catch(error) { macros.push("/"+serverID, {})}
     finally{serverMacros = macros.getData("/"+serverID)}
     //console.log(serverMacros)
     for (var i = 1; i < cmd.length; i++) {
