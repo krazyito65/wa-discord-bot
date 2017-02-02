@@ -5,7 +5,7 @@ var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
 var JsonDB = require('node-json-db');
 var macros = new JsonDB("./data/macros", true, true);
-var timer = setTimeout(function() { bot.connect() }, 600*1000)
+var timer = setTimeout(function() { bot.connect() }, 600*1000);
 
 // commands
 var commands = {
@@ -35,7 +35,7 @@ bot.on('ready', function() {
 bot.on('message', function(user, userID, channelID, message, event) {
     clearTimeout(timer)
 	timer = setTimeout(function() { 
-		bot.connect()
+		bot.connect();
 		console.log("Time'd out.  Reconnecting")
 	}, 600*1000)
 	if (message[0] !== prefix) {return}
