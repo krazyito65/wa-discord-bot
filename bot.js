@@ -74,9 +74,10 @@ bot.on('message', function(user, userID, channelID, message, event) {
 });
 
 bot.on("disconnect", function() {
-	 console.log("Bot d/c. Do something.")
+	console.log("Bot d/c. Do something.");
+	bot.connect();
 
-})
+});
 
 exports.sendMsg = function (channelID, msg) {
     bot.sendMessage({
