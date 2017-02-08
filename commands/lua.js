@@ -1,4 +1,5 @@
 var request = require('request');
+var botFuncs = require('../bot.js');
 
 module.exports = function (args, user, userID, channelID, bot){
     if (args !== undefined && args.length > 0) {
@@ -17,6 +18,7 @@ module.exports = function (args, user, userID, channelID, bot){
                         to: channelID,
                         message: "*Lua Output*: ```\n"+data.output.replace("`","\`")+"\n```"
                     })
+                    botFuncs.log(data.output)
                 }
             }
         })

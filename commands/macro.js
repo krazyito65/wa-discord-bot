@@ -18,7 +18,7 @@ module.exports = function (args, user, userID, channelID, bot){
 	var isMod = canManageMessages(bot, userID, serverID)
 
 	if (!isMod) {
-		console.log(user + "denied macro command")
+		botFuncs.log(user + "denied macro command")
 		botFuncs.sendMsg(channelID, "You do not have permisson to use that"); 
 		return
 	}
@@ -29,7 +29,7 @@ module.exports = function (args, user, userID, channelID, bot){
 	var currMacro = "/"+serverID+"/"+args[1]
 
 	if (args.length > 1 && isRemove) {
-		console.log("Removing command")
+		botFuncs.log("Removing command")
 		//remove data
 		macros.delete(currMacro)
 		botFuncs.sendMsg(channelID, "Removed command: " + args[1])
@@ -55,7 +55,7 @@ module.exports = function (args, user, userID, channelID, bot){
 
 		if(isEdit){
 			if(data) {
-				console.log("Editing command " + args[1])
+				botFuncs.log("Editing command " + args[1])
 				//edit data
 				macros.push(currMacro, output)
 				botFuncs.sendMsg(channelID, "Edited command: " + args[1])
@@ -68,13 +68,13 @@ module.exports = function (args, user, userID, channelID, bot){
 		else if (isAdd) {
 			// check if the command exists.  If yes, edit the command.
 			if(!data) {
-				console.log("Adding command " + args[1])
+				botFuncs.log("Adding command " + args[1])
 				//add data
 				macros.push(currMacro, output)
 				botFuncs.sendMsg(channelID, "Adding command: " + args[1])
 			}
 			else {
-				console.log("Command already exists, if you are sure you want to overwrite use the `edit` command.")
+				botFuncs.log("Command already exists, if you are sure you want to overwrite use the `edit` command.")
 				botFuncs.sendMsg(channelID, "Command already exists, if you are sure you want to overwrite use the edit command.")
 			}
 		}

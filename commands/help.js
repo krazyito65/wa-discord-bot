@@ -7,7 +7,7 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 	var args = args.split(" ");
 	if (/macros?/.test(args[0])){
 		var returnString = 'List of current macros:\n'
-		console.log("Listing macros")
+		botFuncs.log("Listing macros")
 		serverMacros = sortObject(serverMacros)
 		for (var macro in serverMacros){
 			returnString += "\t" + prefix + macro +"\n"
@@ -17,7 +17,7 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 		botFuncs.sendMsg(userID, returnString)
 	}else {
 		var returnString = 'List of current commands:\n'
-		console.log("Listing commands")
+		botFuncs.log("Listing commands")
 		commands = sortObject(commands)
 		for (var cmd in commands){
 			if (cmd === "help") {cmd = "help [macros]"}

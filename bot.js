@@ -7,6 +7,10 @@ var JsonDB = require('node-json-db');
 var macros = new JsonDB("./data/macros", true, true);
 var timer = setTimeout(function() { bot.connect() }, 600*1000);
 
+var log = exports.log = function(msg) {
+    console.log("[" +moment().tz("America/Chicago").format('MM/DD/YYYY h:mm:ss a') + "] " + msg);
+}
+
 // commands
 var commands = {
     help: require('./commands/help.js'),
@@ -33,36 +37,36 @@ bot.on('ready', function() {
 
 // Main message handler-
 bot.on('message', function(user, userID, channelID, message, event) {
-    clearTimeout(timer)
-	timer = setTimeout(function() { 
-		bot.connect();
-		console.log("Time'd out.  Reconnecting")
-	}, 600*1000);
-	if (message[0] !== prefix) {return}
+    clearTimeout(timer);
+    timer = setTimeout(function() { 
+	bot.connect();
+	log("Time'd out.  Reconnecting");
+    }, 600*1000);
+    if (message[0] !== prefix) {return}
     else if (userID === bot.id) {return}
     var cmd = message.split(" ");
     var args = '';
-    var serverID = bot.channels[channelID].guild_id
+    var serverID = bot.channels[channelID].guild_id;
     var serverMacros;
     try { serverMacros = macros.getData("/"+serverID)}
     catch(error) { macros.push("/"+serverID, {})}
     finally{serverMacros = macros.getData("/"+serverID)}
-    //console.log(serverMacros)
+    //log(serverMacros)
     for (var i = 1; i < cmd.length; i++) {
         args += cmd[i] + " ";
     }
 
     cmd = cmd[0].substring(1);
-    // console.log("cmd: " + cmd);ja
-    // console.log("args: " + args);
+    // log("cmd: " + cmd);ja
+    // log("args: " + args);
     if (cmd === "help") {
-        console.log("Sending command: " + cmd)
+        log("Sending command: " + cmd)
         commands[cmd](args.trim(), macros, commands, user, userID, channelID, bot, prefix);
     }else if (commands[cmd]) {
-        console.log("Sending command: " + cmd)
+       log("Sending command: " + cmd)
         commands[cmd](args.trim(), user, userID, channelID, bot);
     }else if (serverMacros[cmd]){
-        console.log("Sending macro: " + cmd)
+        log("Sending macro: " + cmd)
 
         //check macros table
         bot.sendMessage({
@@ -70,13 +74,12 @@ bot.on('message', function(user, userID, channelID, message, event) {
             message: serverMacros[cmd]
         });
     }
-    macros.reload()
+    macros.reload();
 });
 
 bot.on("disconnect", function() {
-	console.log("Bot d/c. Do something.");
+	log("Bot d/c. Do something.");
 	bot.connect();
-
 });
 
 exports.sendMsg = function (channelID, msg) {

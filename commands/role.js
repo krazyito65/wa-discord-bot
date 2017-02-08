@@ -5,10 +5,9 @@ var botFuncs = require('../bot.js')
 module.exports = function (args, user, userID, channelID, bot){
 
     var serverID = bot.channels[channelID].guild_id; // grab server id
-    
     if (!args) {
 
-        botFuncs.sendMsg(channelID, "Please select a role:\nDruid\nDeath Knight\nDemon Hunter\nHunter\nMage\nMonk\nPaladin\nPriest\nShaman\nRogue\nWarlock\nWarrior")
+        botFuncs.sendMsg(channelID, "Please specify a HEX color or select a role:\nDruid\nDeath Knight\nDemon Hunter\nHunter\nMage\nMonk\nPaladin\nPriest\nShaman\nRogue\nWarlock\nWarrior")
         return
     } 
 
@@ -18,7 +17,7 @@ module.exports = function (args, user, userID, channelID, bot){
         var vRole = validateRole(args[1].toLowerCase()); // check for valid role, return string
         var selectedRole = searchRoles(bot.servers[serverID].roles, vRole);
 
-        console.log("Removing role: " + vRole + " from " + user);
+        botFuncs.log("Removing role: " + vRole + " from " + user);
         bot.removeFromRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
         botFuncs.sendMsg(channelID, "Removing role: "+ vRole + " from " + user)
         return
@@ -28,13 +27,45 @@ module.exports = function (args, user, userID, channelID, bot){
     if (vRole) {
         var selectedRole = searchRoles(bot.servers[serverID].roles, vRole); // validate role exists on server; return role Object
         if (selectedRole) {
-            console.log("Adding role: " + vRole + " to " + user);
+            botFuncs.log("Adding role: " + vRole + " to " + user);
             bot.addToRole({"serverID": serverID, "userID": userID, "roleID": selectedRole.id});
             botFuncs.sendMsg(channelID, "Adding role: "+ vRole + " to " + user)
         }
     } else {
-        console.log(user + " input invalid role: " + vRole);
-        botFuncs.sendMsg(channelID, "Invalid role.")
+        var val = args[0];
+
+        if ( (val.length === 6) || (val[0] === '#' && val.length === 7) ){
+            val = val.replace(/^#/, '');
+            if (!/[^0-9a-fA-F]/.test(val)) {
+                // valid hex
+                botFuncs.log("valid hex");
+                var hex = parseInt(val, 16);
+                botFuncs.log("giving color: "+ hex.toString(16) + " to " + user);
+                bot.createRole( serverID, function(err, response) {
+                    if (err) return botFuncs.log(err);
+                        bot.editRole( { 
+                                roleID: response.id,
+                                serverID: serverID,
+                                name: user,
+                                color: hex,
+                               position: 0
+                             });
+                        bot.addToRole({"serverID": serverID, "userID": userID, "roleID": response.id});
+                        botFuncs.sendMsg(channelID, "Adding role: "+ hex.toString(16) + " to " + user)
+                    });
+
+                return
+            }else{
+                botFuncs.log("not valid hex role");
+            }
+        } else {
+            botFuncs.log("string too short or long for hex role");
+        }
+
+
+
+        botFuncs.log(user + " input invalid role: " + args[0]);
+        botFuncs.sendMsg(channelID, "Invalid role.");
     }
 }
 
