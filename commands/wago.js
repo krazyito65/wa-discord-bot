@@ -1,8 +1,8 @@
-// var request = require('request');
+var botFuncs = require('../bot.js')
 
 module.exports = function (args, user, userID, channelID, bot){
 	if (!args){
-		console.log("Sending wago link");
+		log("Sending wago link");
 		bot.sendMessage({
             to: channelID,
             message: "https://wago.io/ - Please check wago before requesting auras"
