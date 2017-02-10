@@ -39,19 +39,20 @@ module.exports = function (args, user, userID, channelID, bot){
             if (!/[^0-9a-fA-F]/.test(val)) {
                 // valid hex
                 botFuncs.log("valid hex");
-                var hex = parseInt(val, 16);
+                //var hex = parseInt(val, 16);
                 botFuncs.log("giving color: "+ hex.toString(16) + " to " + user);
-                bot.createRole( serverID, function(err, response) {
+                botFuncs.log("Nope, NYI");
+				//bot.createRole( serverID, function(err, response) {
                     if (err) return botFuncs.log(err);
-                        bot.editRole( { 
-                                roleID: response.id,
-                                serverID: serverID,
-                                name: user,
-                                color: hex,
-                               position: 0
-                             });
-                        bot.addToRole({"serverID": serverID, "userID": userID, "roleID": response.id});
-                        botFuncs.sendMsg(channelID, "Adding role: "+ hex.toString(16) + " to " + user)
+                        //bot.editRole( { 
+                                //roleID: response.id,
+                                //serverID: serverID,
+                                //name: user,
+                                //color: hex,
+                               //position: 0
+                             //});
+                        //bot.addToRole({"serverID": serverID, "userID": userID, "roleID": response.id});
+                        //botFuncs.sendMsg(channelID, "Adding role: "+ hex.toString(16) + " to " + user)
                     });
 
                 return
