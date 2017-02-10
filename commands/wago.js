@@ -2,13 +2,13 @@ var botFuncs = require('../bot.js')
 
 module.exports = function (args, user, userID, channelID, bot){
 	if (!args){
-		log("Sending wago link");
+		botFuncs.log("Sending wago link");
 		bot.sendMessage({
             to: channelID,
             message: "https://wago.io/ - Please check wago before requesting auras"
         })
 	} else {
-		console.log("Sending wago search link");
+		botFuncs.log("Sending wago search link");
 		bot.sendMessage({
             to: channelID,
             message: "<https://wago.io/search?q=" + args.replace(/ /g,"+") + ">"
