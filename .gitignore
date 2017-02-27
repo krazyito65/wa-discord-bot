@@ -1,5 +1,6 @@
 token
 log*
 node_module*
-*.json
 embed example.js
+/data/*.json
+/data/prefix.json*

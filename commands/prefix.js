@@ -7,8 +7,11 @@ module.exports = function (args, user, userID, channelID, bot){
 
 	var args = args.split(" ");
 	var newPrefix = args[0];
-
-	if (canManageChannels(bot, userID, serverID)) {
+	if (newPrefix.trim() == ""){
+		botFuncs.sendMsg(channelID, "Not a good prefix");
+		botFuncs.log("Not a good prefix")
+	}
+	else if (canManageChannels(bot, userID, serverID)) {
 		botFuncs.sendMsg(channelID, "Changed the prefix to: " + newPrefix);
 		botFuncs.log(user+ " prefix to " + newPrefix);
 		prefix.push("/"+serverID, newPrefix)
