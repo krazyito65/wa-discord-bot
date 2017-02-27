@@ -81,6 +81,7 @@ module.exports = function (args, user, userID, channelID, bot){
 	}
 }
 
+//https://github.com/izy521/discord.io/blob/master/docs/permissions.md
 function canManageMessages(client, userID, serverID) {
     var server = client.servers[serverID];
     var member = server.members[userID];
