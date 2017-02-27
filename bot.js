@@ -5,6 +5,7 @@ var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
 var JsonDB = require('node-json-db');
 var macros = new JsonDB("./data/macros", true, true);
+var prefixDB = new JsonDB("./data/prefix", true, true);
 var timer = setTimeout(function() { bot.connect() }, 600*1000);
 
 var log = exports.log = function(msg) {
@@ -18,7 +19,8 @@ var commands = {
     lua: require('./commands/lua.js'),
     wago: require('./commands/wago.js'),
     macro: require('./commands/macro.js'),
-    ping: require('./commands/ping.js')
+    ping: require('./commands/ping.js'),
+    prefix: require('./commands/prefix.js')
 }
 
 var bot = new Discord.Client({
@@ -37,16 +39,19 @@ bot.on('ready', function() {
 
 // Main message handler-
 bot.on('message', function(user, userID, channelID, message, event) {
+    var serverID = bot.channels[channelID].guild_id;
     clearTimeout(timer);
     timer = setTimeout(function() { 
 	bot.connect();
 	log("Time'd out.  Reconnecting");
     }, 600*1000);
+    //prefix settings
+    try{prefix = prefixDB.getData("/"+serverID)} //try to get current prefix for server
+    catch(error){prefixDB.push("/"+serverID, prefix)} // if it doens't exist then set it to the default at the top of the code.
     if (message[0] !== prefix) {return}
     else if (userID === bot.id) {return}
     var cmd = message.split(" ");
     var args = '';
-    var serverID = bot.channels[channelID].guild_id;
     var serverMacros;
     try { serverMacros = macros.getData("/"+serverID)}
     catch(error) { macros.push("/"+serverID, {})}
@@ -75,6 +80,7 @@ bot.on('message', function(user, userID, channelID, message, event) {
         });
     }
     macros.reload();
+    prefixDB.reload();
 });
 
 bot.on("disconnect", function() {

@@ -1,5 +1,5 @@
 token
 log*
 node_module*
-macros.json*
+*.json
 embed example.js
