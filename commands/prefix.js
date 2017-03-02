@@ -6,10 +6,10 @@ module.exports = function (args, user, userID, channelID, bot){
 	var serverID = bot.channels[channelID].guild_id; // grab server id
 
 	var args = args.split(" ");
-	var newPrefix = args[0];
+	var newPrefix = args[0].substring(0,1);
 	if (newPrefix.trim() == ""){
-		botFuncs.sendMsg(channelID, "Not a good prefix");
-		botFuncs.log("Not a good prefix")
+		botFuncs.sendMsg(channelID, newPrefix+ " is not a good prefix");
+		botFuncs.log("'"+newPrefix+"'" + " is not a good prefix")
 	}
 	else if (canManageChannels(bot, userID, serverID)) {
 		botFuncs.sendMsg(channelID, "Changed the prefix to: " + newPrefix);
