@@ -39,6 +39,7 @@ bot.on('ready', function() {
 
 // Main message handler-
 bot.on('message', function(user, userID, channelID, message, event) {
+    if (channelID in bot.directMessages) {return} // ignore all direct msgs.  (Can point this to a different command file for future use.)
     var serverID = bot.channels[channelID].guild_id;
     clearTimeout(timer);
     timer = setTimeout(function() { 
