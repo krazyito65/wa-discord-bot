@@ -23,4 +23,7 @@ module.exports = function (args, user, userID, channelID, bot){
             }
         })
     }
+    else{
+            botFuncs.sendMsg(channelID, "Not enough arguments"); 
+    }
 }
