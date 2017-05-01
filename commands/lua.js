@@ -17,7 +17,7 @@ module.exports = function (args, user, userID, channelID, bot){
                 else if (data.output) {
                     bot.sendMessage({
                         to: channelID,
-                        message: "*Lua Output*: ```\n"+data.output.replace("`","")+"\n```"
+                        message: "*Lua Output*: ```\n"+data.output.replace(/`/g,"")+"\n```"
                     })
                     botFuncs.log(data.output)
                 }
