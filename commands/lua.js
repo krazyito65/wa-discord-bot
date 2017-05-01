@@ -2,6 +2,7 @@ var request = require('request');
 var botFuncs = require('../bot.js');
 
 module.exports = function (args, user, userID, channelID, bot){
+
     if (args !== undefined && args.length > 0) {
         var lua = args.replace(/^(\n)?`+(LUA|lua)\s+|^(\n)?`+|(\n)?`+$/g, "")
         request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {
@@ -16,7 +17,7 @@ module.exports = function (args, user, userID, channelID, bot){
                 else if (data.output) {
                     bot.sendMessage({
                         to: channelID,
-                        message: "*Lua Output*: ```\n"+data.output.replace("`","\`")+"\n```"
+                        message: "*Lua Output*: ```\n"+data.output.replace("`","")+"\n```"
                     })
                     botFuncs.log(data.output)
                 }
