@@ -4,7 +4,7 @@ var gyazoDB = new JsonDB("./data/gyazo", true, true);
 
 module.exports = function (args, user, userID, channelID, bot, sentAsCommand=true){
   var serverID = bot.channels[channelID].guild_id; // grab server id
-  var isMod = canManageChannels(bot, userID, serverID)
+
   if (!sentAsCommand) {
     //if its not a command, check the settings if we should send our msg.
     var data = false; // set the defualt of off
@@ -21,6 +21,7 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand=tru
   }
   else {
     // it is being used as a command.
+    var isMod = canManageMessages(bot, userID, serverID)
     if (isMod) {
       var args = args.split(" ");
       if (!args[0]) {botFuncs.sendMsg(channelID, "Not a valid option. Please use true or false"); return}
@@ -52,8 +53,8 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand=tru
 }
 
 //https://github.com/izy521/discord.io/blob/master/docs/permissions.md
-function canManageChannels(client, userID, serverID) {
+function canManageMessages(client, userID, serverID) {
     var server = client.servers[serverID];
     var member = server.members[userID];
-    return member.roles.some( roleID => server.roles[roleID].GENERAL_MANAGE_CHANNELS);
+    return member.roles.some( roleID => server.roles[roleID].TEXT_MANAGE_MESSAGES );
 }
