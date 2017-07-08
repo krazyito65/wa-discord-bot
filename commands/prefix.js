@@ -8,13 +8,13 @@ module.exports = function (args, user, userID, channelID, bot){
 	var args = args.split(" ");
 	var newPrefix = args[0].substring(0,1);
 	if (newPrefix.trim() == ""){
-		botFuncs.sendMsg(channelID, newPrefix+ " is not a good prefix");
-		botFuncs.log("'"+newPrefix+"'" + " is not a good prefix")
+		botFuncs.sendMsg(channelID, newPrefix + " is not a good prefix");
+		botFuncs.log("'" + newPrefix + "'" + " is not a good prefix")
 	}
 	else if (canManageChannels(bot, userID, serverID)) {
 		botFuncs.sendMsg(channelID, "Changed the prefix to: " + newPrefix);
-		botFuncs.log(user+ " prefix to " + newPrefix);
-		prefix.push("/"+serverID, newPrefix)
+		botFuncs.log(user + " prefix to " + newPrefix);
+		prefix.push("/" + serverID, newPrefix)
 	}
 	else {
 		botFuncs.sendMsg(channelID, "You do not have permissons to change the prefix.");
