@@ -17,12 +17,12 @@ module.exports = function (args, user, userID, channelID, bot){
   }
   else if (args[0] == 'add' && args[1] == 'location'){ // if we want to add a location
     args.splice(0,2) // remove the command and location.
-    botFuncs.sendMsg(channelID, addLocation(args.join().replace(",", " "), serverID));
+    botFuncs.sendMsg(channelID, addLocation(args.join().replace(new RegExp(",", "g"), " "), serverID));
   }
   else if (args[0].toLowerCase() == 'add') {
     var location = args[1]
     args.splice(0,2) // remove the command and location.
-    botFuncs.sendMsg(channelID, addRestaurant(location, args.join().replace(",", " "), serverID)); // pass in all the food locations listed
+    botFuncs.sendMsg(channelID, addRestaurant(location, args.join().replace(new RegExp(",", "g"), " "), serverID)); // pass in all the food locations listed
   }
   else if (args[0] == 'list') {
     var list = lunchDB.getData("/" + serverID); // get the list of locations
@@ -36,14 +36,14 @@ module.exports = function (args, user, userID, channelID, bot){
   }
   else if (args[0] == 'remove' && args[1] == 'location') {
     args.splice(0,2) // remove the command and location.
-    botFuncs.sendMsg(channelID, removeLocation(args.join().replace(",", " "), serverID));
+    botFuncs.sendMsg(channelID, removeLocation(args.join().replace(new RegExp(",", "g"), " "), serverID));
   }
   else if (args[0] == 'remove') {
     var list = lunchDB.getData("/" + serverID); // get the list of locations
     for (var location in list) {
       if (args[1] == location) {
         args.splice(0,2) // remove the command and location.
-        botFuncs.sendMsg(channelID, removeRestaurant(location, args.join().replace(",", " "), serverID))
+        botFuncs.sendMsg(channelID, removeRestaurant(location, args.join().replace(new RegExp(",", "g"), " "), serverID))
         return
       }
     }
@@ -91,8 +91,15 @@ function removeRestaurant(location, restaurant, serverID) {
 }
 
 function addRestaurant(location, restaurant, serverID) {
-  try {lunchDB.getData("/" + serverID + "/" + location)} // check if the location exists
+  var list;
+  try {list = lunchDB.getData("/" + serverID + "/" + location)} // check if the location exists
   catch(error){return toTitleCase(location) + " is not in the list.  Please add it first with **!lunch add location LOCATION**"}
+
+  for (var i = 0; i < list.length; i++) {
+    if (list[i] == restaurant) {
+      return toTitleCase(restaurant) + " is already part of " + toTitleCase(location)
+    }
+  }
   lunchDB.push("/" + serverID + "/" + location, [restaurant], false) // add a restaurant to the DB.
   return toTitleCase(restaurant) + " added to " + toTitleCase(location)
 }
