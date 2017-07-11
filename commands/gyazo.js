@@ -3,6 +3,7 @@ var botFuncs = require('../bot.js')
 var gyazoDB = new JsonDB("./data/gyazo", true, true);
 
 module.exports = function (args, user, userID, channelID, bot, sentAsCommand=true){
+  //sentAsCommand is a variable that is true by default since most functions are called as commands by defualt.
   var serverID = bot.channels[channelID].guild_id; // grab server id
 
   if (!sentAsCommand) {

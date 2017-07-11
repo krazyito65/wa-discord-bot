@@ -17,13 +17,13 @@ var commands = {
     macro: require('./commands/macro.js'),
     ping: require('./commands/ping.js'),
     prefix: require('./commands/prefix.js'),
-    gyazo: require('./commands/gyazo.js')
+    gyazo: require('./commands/gyazo.js'),
+    lunch: require('./commands/lunch.js')
 }
 
 var bot = new Discord.Client({
     token: token,
     autorun: true,
-
 });
 var prefix = '!'
 
@@ -31,14 +31,11 @@ var log = exports.log = function(msg) {
     console.log("[" + moment().tz("America/Chicago").format('MM/DD/YYYY h:mm:ss a') + "] " + msg);
 }
 
-
-
 bot.on('ready', function() {
     console.log("===================================================");
     console.log("TIME: " + moment().tz("America/Chicago").format('MMMM Do YYYY, h:mm:ss a'));
     console.log(bot.username + " - (" + bot.id + ")");
 });
-
 
 // Main message handler-
 bot.on('message', function(user, userID, channelID, message, event) {
