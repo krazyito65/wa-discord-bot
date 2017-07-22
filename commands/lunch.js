@@ -108,6 +108,7 @@ function addRestaurant(location, restaurant, serverID) {
 function listLocations(serverID) {
   var list = lunchDB.getData("/" + serverID);
   var msg = "";
+  list = sortObject(list)
   for (var location in list) {
     msg += location + "\n";
   }
@@ -116,10 +117,9 @@ function listLocations(serverID) {
 
 function listRestaurant(location, serverID) {
   var list;
-
   try {list = lunchDB.getData("/" + serverID + "/" + location)} // check if the location exists
   catch(error){return toTitleCase(location) + " is not in the list.  Please add it first with **!lunch add location LOCATION**"}
-
+  list.sort()
   var msg = "";
   for (var i = 0; i < list.length; i++) {
     msg += list[i] + "\n";
@@ -148,6 +148,21 @@ function showHelp() {
   msg += 'Lists all restaurants at a location';
 
   return msg
+}
+
+function sortObject(o) {
+  var sorted = {},
+  key, a = [];
+  for (key in o) {
+    if (o.hasOwnProperty(key)) {
+      a.push(key);
+    }
+  }
+  a.sort();
+  for (key = 0; key < a.length; key++) {
+    sorted[a[key]] = o[a[key]];
+  }
+  return sorted;
 }
 
 function toTitleCase(str) {
