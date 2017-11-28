@@ -11,7 +11,7 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 		botFuncs.log("Listing macros")
 		serverMacros = sortObject(serverMacros)
 		for (var macro in serverMacros){
-			returnString += prefix + macro + ": " + serverMacros[macro] +"\n\n\n"
+			returnString += prefix + macro + ": " + serverMacros[macro] +"\n==================================================\n"
 		}
 
 		fsPath.writeFile("data/" + serverID, returnString, function(err){
