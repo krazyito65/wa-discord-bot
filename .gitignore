@@ -2,5 +2,4 @@ token
 log*
 node_module*
 embed example.js
-/data/*.json
-/data/prefix.json*
+/data/*

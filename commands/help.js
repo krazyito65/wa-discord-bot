@@ -1,4 +1,5 @@
 var botFuncs = require('../bot.js')
+var fsPath = require('fs-path');
 
 module.exports = function (args, macros, commands, user, userID, channelID, bot, prefix){
 	var serverID = bot.channels[channelID].guild_id; // grab server id
@@ -10,12 +11,16 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 		botFuncs.log("Listing macros")
 		serverMacros = sortObject(serverMacros)
 		for (var macro in serverMacros){
-			returnString += "\t" + prefix + macro +"\n"
+			returnString += "\t" + prefix + macro + ": " + serverMacros[macro] +"\n"
 		}
 
-		botFuncs.sendMsg(channelID, "Check your DM, <@" + userID + ">")
-		botFuncs.sendMsg(userID, returnString)
-	}else {
+		fsPath.writeFile("data/" + serverID, returnString, function(err){
+		  botFuncs.log("Updated the macros info file for: " + serverID)
+		});
+
+		botFuncs.sendMsg(channelID, "You can find the macros here: http://bot.weakauras.wtf/" + serverID)
+
+	} else {
 		var returnString = 'List of current commands:\n'
 		botFuncs.log("Listing commands")
 		commands = sortObject(commands)
