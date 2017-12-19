@@ -11,7 +11,7 @@ module.exports = function (args, user, userID, channelID, bot){
 		botFuncs.log("Sending wago search link");
 		bot.sendMessage({
             to: channelID,
-            message: "<https://wago.io/search?q=" + args.replace(/ /g,"+") + ">"
+            message: "<https://wago.io/search/" + args.replace(/ /g,"+") + ">"
         })
 	}
 }
