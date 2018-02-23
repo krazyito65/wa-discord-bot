@@ -1,8 +1,10 @@
 var fs = require('fs');
+var request = require('request');
 var Discord = require('discord.io');
 var moment = require('moment-timezone');
 var data = fs.readFileSync('token', "utf8");
 var token =  data.toString().trim();
+var hook = fs.readFileSync('hook', "utf8").toString().trim();
 var JsonDB = require('node-json-db');
 var macros = new JsonDB("./data/macros", true, true);
 var prefixDB = new JsonDB("./data/prefix", true, true);
@@ -102,3 +104,80 @@ exports.sendMsg = function (channelID, msg) {
         message: msg
     });
 }
+
+var http = require('http');
+
+const server = http.createServer();
+
+server.on('request', (req, response) => {
+  // we should only get POSTS, so ignore everything else.
+  response.writeHead(200,{"Content-Type":"application/json"});
+  if (req.method == "POST") {
+    log("Got a post request. Doing stuff..")
+    var git;
+    var payload;
+    req.on('data', (chunk) => {
+      git = JSON.parse(chunk)
+      log(git.release.body)
+      payload = {
+        "username": "WeakAuras-Release",
+        "avatar_url": "https://media.forgecdn.net/avatars/62/782/636142194921799650.png",
+        "embeds": [{
+          "title": git.release.tag_name,
+          "description": git.release.body,
+          "url": git.release.url,
+          "color": 1399932,
+          "timestamp": moment().format(),
+          // "fields": [
+          //   {
+          //     "name": "Links",
+          //     "value": "[Request this webhook](https://goo.gl/forms/S1mkG70XDU543KO23) | [Github](https://github.com/krazyito65/mmo-champion-rss-webhook)"
+          //   }
+          // ],
+          // "footer": {
+          //   "text": "This webook is in alpha. Contact Krazyito#1696"
+          // },
+          // "thumbnail": {
+          //   "url": THUMBNAIL_URL//"http://static.mmo-champion.com/images/tranquilizing/logo.png"
+          // },
+        }]
+      }
+      request({
+        url: hook,
+        method: "POST",
+        body: payload,
+        json: true
+      });
+    }).on('end', () => {
+      response.end("I got your response.");
+    });
+  }
+  else {
+    response.end("Undefined request .");
+  }
+});
+
+
+
+
+
+// var server = http.createServer ( function(request,response){
+//   console.log(request.body)
+//   // response.writeHead(200,{"Content-Type":"application/json"});
+//   // if(request.method == "GET"){
+//   //   response.end("received GET request.")
+//   // }
+//   // else if(request.method == "POST"){
+//   //   console.log("=======================REQUEST====================")
+//   //   console.log(request)
+//   //   console.log("=======================RESPONSE===================")
+//   //   console.log(response)
+//   //   response.end("received POST request.");
+//   // }
+//   // else{
+//   //   response.end("Undefined request .");
+//   // }
+// });
+
+server.listen(8000);
+console.log("Server running on port 8000");
