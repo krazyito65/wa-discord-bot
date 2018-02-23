@@ -10,7 +10,7 @@ server.on('request', (req, response) => {
   // we should only get POSTS, so ignore everything else.
   response.writeHead(200,{"Content-Type":"application/json"});
   if (req.method == "POST") {
-    log("Got a post request. Doing stuff..")
+    console.log("Got a post request. Doing stuff..")
     var git;
     var payload;
     req.on('data', (chunk) => {
