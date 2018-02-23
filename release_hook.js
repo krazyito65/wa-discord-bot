@@ -1,5 +1,7 @@
+var fs = require('fs');
 var http = require('http');
 var request = require('request');
+var moment = require('moment-timezone');
 var hook = fs.readFileSync('hook', "utf8").toString().trim();
 
 const server = http.createServer();
@@ -13,7 +15,7 @@ server.on('request', (req, response) => {
     var payload;
     req.on('data', (chunk) => {
       git = JSON.parse(chunk)
-      log(git.release.body)
+      console.log(git.release.body)
       payload = {
         "username": "WeakAuras-Release",
         "avatar_url": "https://media.forgecdn.net/avatars/62/782/636142194921799650.png",
