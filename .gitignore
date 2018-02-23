@@ -3,3 +3,4 @@ log*
 node_module*
 embed example.js
 /data/*
+hook
