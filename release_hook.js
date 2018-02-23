@@ -15,6 +15,8 @@ server.on('request', (req, response) => {
     var payload;
     req.on('data', (chunk) => {
       git = JSON.parse(chunk)
+	  console.log("==========================================================")
+	  if (git.action != "published") {return}
       console.log(git.release.body)
       payload = {
         "username": "WeakAuras-Release",
