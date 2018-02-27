@@ -31,6 +31,18 @@ module.exports = function (args, user, userID, channelID, bot){
         return
     }
     if (isRemove) {
-        botFuncs.sendMsg(channelID, "NYI. :)")
+        serverQuotes = removeFrmArr(serverQuotes, args)
+        if (serverQuotes === 0) {
+            botFuncs.sendMsg(channelID, "Quote not found.")
+        } else {
+            quotes.push("/"+serverID, serverQuotes)
+            botFuncs.sendMsg(channelID, "Removed quote.")
+        }
+
     }
 }
+
+function removeFrmArr(array, element) {
+  if (!array.includes(element)) { return 0 }
+  return array.filter(e => e !== element);
+};
