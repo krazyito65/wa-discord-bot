@@ -17,10 +17,10 @@ module.exports = function (args, user, userID, channelID, bot){
     var option = args[0]
     args.shift();
     args = args.join(" ");
-    var isValidOption = /(add|\+|edit)/.test(option)
+    var isValidOption = /(add|\+)/.test(option)
     var isRemove = /(remove|-)/.test(option)
     if  (!isValidOption && !isRemove) {
-        botFuncs.sendMsg(channelID, "Not a valid option\nUse !quote [add|+|edit|remove|-] quote")
+        botFuncs.sendMsg(channelID, "Not a valid option\nUse !quote [add|+|remove|-] quote")
         return
     }
     if(isValidOption) {
