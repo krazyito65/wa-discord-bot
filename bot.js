@@ -18,7 +18,8 @@ var commands = {
     ping: require('./commands/ping.js'),
     prefix: require('./commands/prefix.js'),
     gyazo: require('./commands/gyazo.js'),
-    lunch: require('./commands/lunch.js')
+    lunch: require('./commands/lunch.js'),
+    quote: require('./commands/quote.js'),
 }
 
 var bot = new Discord.Client({
