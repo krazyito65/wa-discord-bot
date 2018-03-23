@@ -27,18 +27,6 @@ server.on('request', (req, response) => {
           "url": git.release.url,
           "color": 1399932,
           "timestamp": moment().format(),
-          // "fields": [
-          //   {
-          //     "name": "Links",
-          //     "value": "[Request this webhook](https://goo.gl/forms/S1mkG70XDU543KO23) | [Github](https://github.com/krazyito65/mmo-champion-rss-webhook)"
-          //   }
-          // ],
-          // "footer": {
-          //   "text": "This webook is in alpha. Contact Krazyito#1696"
-          // },
-          // "thumbnail": {
-          //   "url": THUMBNAIL_URL//"http://static.mmo-champion.com/images/tranquilizing/logo.png"
-          // },
         }]
       }
       request({
@@ -46,9 +34,14 @@ server.on('request', (req, response) => {
         method: "POST",
         body: payload,
         json: true
-      });
+      })
+	  console.log("payload:")
+	  console.log(payload)
+	  ;
     }).on('end', () => {
       response.end("I got your response.");
+    }).on('error', (e) => {
+      console.log(e)
     });
   }
   else {
