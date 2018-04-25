@@ -24,7 +24,7 @@ server.on('request', (req, response) => {
         "embeds": [{
           "title": git.release.tag_name,
           "description": git.release.body,
-          "url": git.release.url,
+          "url": git.release.html_url,
           "color": 1399932,
           "timestamp": moment().format(),
         }]
