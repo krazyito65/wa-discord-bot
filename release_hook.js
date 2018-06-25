@@ -22,7 +22,7 @@ server.on('request', (req, response) => {
 	  if (body.length >= 2000) {
 		body = body.slice(0,2000);
 		body = body.replace(/\n.*$/, '');
-		body += "\n\n - And more...";
+		body += "\n\n - [And more...](" + git.release.html_url + ")";
 	  }
       payload = {
         "username": "WeakAuras-Release",
