@@ -18,12 +18,18 @@ server.on('request', (req, response) => {
 	  console.log("==========================================================")
 	  if (git.action != "published") {return}
       console.log(git.release.body)
+	  var body = git.release.body;
+	  if (body.length >= 2000) {
+		body = body.slice(0,2000);
+		body = body.replace(/\n.*$/, '');
+		body += "\n\n - And more...";
+	  }
       payload = {
         "username": "WeakAuras-Release",
         "avatar_url": "https://media.forgecdn.net/avatars/62/782/636142194921799650.png",
         "embeds": [{
           "title": git.release.tag_name,
-          "description": git.release.body,
+          "description": body,
           "url": git.release.html_url,
           "color": 1399932,
           "timestamp": moment().format(),
