@@ -20,7 +20,7 @@ server.on('request', (req, response) => {
       console.log(git.release.body)
 	  var body = git.release.body;
 	  if (body.length >= 2000) {
-		body = body.slice(0,2000);
+		body = body.slice(0,1900);
 		body = body.replace(/\n.*$/, '');
 		body += "\n\n - [And more...](" + git.release.html_url + ")";
 	  }
