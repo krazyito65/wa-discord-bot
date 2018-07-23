@@ -72,6 +72,8 @@ bot.on('message', function(user, userID, channelID, message, event) {
     }
 
     cmd = cmd[0].substring(1); //lop off the first character (the prefix)
+    var cmd_i = getParameterCaseInsensitive(serverMacros, cmd)
+    log("insensitive cmd: " + cmd_i)
     // log("cmd: " + cmd);
     // log("args: " + args);
     if (cmd === "help") {//help command
@@ -87,6 +89,13 @@ bot.on('message', function(user, userID, channelID, message, event) {
             to: channelID,
             message: serverMacros[cmd]
         });
+    }else if (serverMacros[cmd_i]) { //server macros (insensetive)
+        log("Sending insensitive macro: " + cmd_i)
+        //check macros table
+        bot.sendMessage({
+            to: channelID,
+            message: serverMacros[cmd_i]
+    	});
     }
     macros.reload();
     prefixDB.reload();
@@ -103,3 +112,15 @@ exports.sendMsg = function (channelID, msg) {
         message: msg
     });
 }
+	
+/**
+  * @param {Object} object
+  * @param {string} key
+  * @return {any} value
+*/
+function getParameterCaseInsensitive(object, key) {
+    log("key: " + key)
+    log(Object.keys(object).find(k => k.toLowerCase() === key.toLowerCase()))
+  return Object.keys(object).find(k => k.toLowerCase() === key.toLowerCase());
+}
+
