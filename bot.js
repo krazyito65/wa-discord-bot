@@ -20,6 +20,7 @@ var commands = {
     gyazo: require('./commands/gyazo.js'),
     lunch: require('./commands/lunch.js'),
     quote: require('./commands/quote.js'),
+    version: require('./commands/version.js'),
 }
 
 var bot = new Discord.Client({
