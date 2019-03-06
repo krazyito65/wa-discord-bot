@@ -27,9 +27,9 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand = t
                 botFuncs.log("converting temp: " + temp);
 
                 if (unit == 'f') {
-                    botFuncs.sendMsg(channelID, "Temperature Conversioin: " + temp.toUpperCase() + " is equal to " + fToC(tempNumber) + "C");
+                    botFuncs.sendMsg(channelID, "Temperature Conversion: " + temp.toUpperCase() + " is equal to " + fToC(tempNumber) + "C");
                 } else if (unit == 'c') {
-                    botFuncs.sendMsg(channelID, "Temperature Conversioin: " + temp.toUpperCase() + " is equal to " + cToF(tempNumber) + "F");
+                    botFuncs.sendMsg(channelID, "Temperature Conversion: " + temp.toUpperCase() + " is equal to " + cToF(tempNumber) + "F");
                 } else {
                     botFuncs.log("unknown units... " + tempNumber);
                 }
