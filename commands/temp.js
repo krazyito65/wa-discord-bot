@@ -41,7 +41,7 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand = t
         var isMod = canManageMessages(bot, userID, serverID)
         if (isMod) {
             var args = args.split(" ");
-            if (!args[0]) { botFuncs.sendMsg(channelID, "Not a valid option. Please use true or false"); return }
+            if (!args[0]) { botFuncs.sendMsg(channelID, "Not a valid option. Please use true or false to change the automatic temperature conversion"); return }
             var option = args[0].toLowerCase()
 
             var isValidOption = /(true)|(false)/.test(option)
@@ -56,7 +56,7 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand = t
                 return
             }
             else {
-                botFuncs.sendMsg(channelID, "Not a valid option. Please use true or false");
+                botFuncs.sendMsg(channelID, "Not a valid option. Please use true or false to change the automatic temperature conversion");
                 return
             }
 
