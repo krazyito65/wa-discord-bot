@@ -58,6 +58,7 @@ bot.on('message', function (user, userID, channelID, message, event) {
     else if (message[0] !== prefix) {
         // if the prefix does not match, try a trigger word.
         commands["gyazo"](message.trim(), user, userID, channelID, bot, false)
+        commands["temp"](message.trim(), user, userID, channelID, bot, false)
         return // otherwise, ignore the msg
     }
 

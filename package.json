@@ -22,8 +22,9 @@
   "homepage": "https://github.com/krazyito65/wa-discord-bot#readme",
   "dependencies": {
     "discord.io": "github:woor/discord.io#gateway_v6",
+    "eslint": "^5.15.1",
     "fs": "0.0.1-security",
-    "fs-path": "0.0.23",
+    "fs-path": "0.0.24",
     "moment-timezone": "^0.5.11",
     "node-json-db": "^0.7.3",
     "pad": "^1.1.0",
