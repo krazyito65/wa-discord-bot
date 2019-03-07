@@ -79,9 +79,9 @@ function canManageMessages(client, userID, serverID) {
 }
 
 function fToC(temp) {
-    return (temp - 32) / 1.8
+    return ((temp - 32) / 1.8).toFixed(2)
 }
 
 function cToF(temp) {
-    return (temp * 1.8) + 32
+    return ((temp * 1.8) + 32).toFixed(2);
 }
