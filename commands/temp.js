@@ -15,10 +15,12 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand = t
         if (data) {
             //if its not a command (normal msg check) do the checks.
             args = args.toLowerCase()
-            var tempRegex = new RegExp(/-?\d*(?:\.\d+)? *[cf]\b[^$-/:-?{-~!"^_`\[\]]/)
+            var tempRegex = new RegExp(/-?(?:(?:\d+)|(?:\d*\.\d+))\s*°?\s*[cf]\b/)
             var unitRegex = new RegExp(/[fc]/)
             var numberRegex = new RegExp(/-?\b\d+(?:\.\d+)?/)
             var containsTemp = tempRegex.test(args)
+
+            botFuncs.log("containsTemp: " + args.match(tempRegex));
             if (containsTemp) {
                 var temp = args.match(tempRegex).toString().replace(/ /g, '')
                 var unit = temp.match(unitRegex)
