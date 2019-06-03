@@ -5,7 +5,7 @@ module.exports = function (args, user, userID, channelID, bot){
 		botFuncs.log("Sending wago link");
 		bot.sendMessage({
             to: channelID,
-            message: "https://wago.io/ - Please check wago before requesting auras"
+            message: "https://wago.io/ \nWago is a database of shareable Auras (and imports for some other popular Addons). \nIf you're requesting an Aura be made for, or recommendation to, you then please ensure you've thoroughly checked Wago first."
         })
 	} else {
 		botFuncs.log("Sending wago search link");
@@ -33,6 +33,3 @@ module.exports = function (args, user, userID, channelID, bot){
 //         }
 //         );
 //     }
-
-
-

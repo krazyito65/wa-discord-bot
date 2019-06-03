@@ -48,6 +48,7 @@ module.exports = function (args, user, userID, channelID, bot){
         } else {
             quotes.push("/"+serverID, serverQuotes)
             botFuncs.sendMsg(channelID, "Removed quote.")
+            botFuncs.log("removing quote: " + args)
         }
 
     }

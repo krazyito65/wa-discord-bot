@@ -6,6 +6,7 @@ var token = data.toString().trim();
 var JsonDB = require('node-json-db');
 var macros = new JsonDB("./data/macros", true, true);
 var prefixDB = new JsonDB("./data/prefix", true, true);
+var quotes = new JsonDB("./data/quotes", true, true);
 var timer = setTimeout(function () { bot.connect() }, 600 * 1000);
 
 // commands
@@ -69,6 +70,12 @@ bot.on('message', function (user, userID, channelID, message, event) {
     try { serverMacros = macros.getData("/" + serverID) }
     catch (error) { macros.push("/" + serverID, {}) }
     finally { serverMacros = macros.getData("/" + serverID) }
+
+    // var serverQuotes;
+    // try { serverQuotes = quotes.getData("/" + serverID) }
+    // catch (error) { quotes.push("/" + serverID, {}) }
+    // finally { serverQuotes = quotes.getData("/" + serverID) }
+
     //log(serverMacros)
     for (var i = 1; i < cmd.length; i++) {
         args += cmd[i] + " ";
@@ -81,7 +88,7 @@ bot.on('message', function (user, userID, channelID, message, event) {
     // log("args: " + args);
     if (cmd === "help") {//help command
         log("Sending command: " + cmd)
-        commands[cmd](args.trim(), macros, commands, user, userID, channelID, bot, prefix);
+        commands[cmd](args.trim(), macros, commands, user, userID, channelID, bot, prefix, quotes);
     } else if (commands[cmd]) { //builtin commands
         log("Sending command: " + cmd)
         commands[cmd](args.trim(), user, userID, channelID, bot);
