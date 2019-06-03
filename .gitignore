@@ -4,3 +4,4 @@ node_module*
 embed example.js
 /data/*
 hook
+token.bkp
