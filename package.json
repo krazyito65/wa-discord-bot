@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/krazyito65/wa-discord-bot#readme",
   "dependencies": {
-    "discord.io": "github:woor/discord.io#gateway_v6",
+    "discord.io": "github:izy521/discord.io",
     "eslint": "^5.16.0",
     "fs": "0.0.1-security",
     "fs-path": "0.0.24",

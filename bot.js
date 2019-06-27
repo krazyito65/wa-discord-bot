@@ -23,6 +23,7 @@ var commands = {
     quote: require('./commands/quote.js'),
     version: require('./commands/version.js'),
     temp: require('./commands/temp.js'),
+    react: require('./commands/react.js'),
 }
 
 var bot = new Discord.Client({
@@ -60,6 +61,8 @@ bot.on('message', function (user, userID, channelID, message, event) {
         // if the prefix does not match, try a trigger word.
         commands["gyazo"](message.trim(), user, userID, channelID, bot, false)
         commands["temp"](message.trim(), user, userID, channelID, bot, false)
+        msgID = event.d.id
+        commands["react"](message.trim(), user, userID, channelID, bot, msgID, false)
         return // otherwise, ignore the msg
     }
 
