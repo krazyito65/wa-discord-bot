@@ -4,7 +4,7 @@ var botFuncs = require('../bot.js');
 module.exports = function (args, user, userID, channelID, bot){
 
     if (args !== undefined && args.length > 0) {
-        var lua = args.replace(/^(\n)?`+(LUA|lua)\s+|^(\n)?`+|(\n)?`+$/g, "")
+        var lua = args.replace(/^(\n)?`+(LUA)\s+|^(\n)?`+|(\n)?`+$/ig, "")
         request.post("https://codewarcraft.com/runlua", {form: {lua:lua}}, function(error, response, body) {
             if (!error && response.statusCode==200) {
                 var data = JSON.parse(body)
@@ -25,6 +25,6 @@ module.exports = function (args, user, userID, channelID, bot){
         })
     }
     else{
-            botFuncs.sendMsg(channelID, "Not enough arguments"); 
+            botFuncs.sendMsg(channelID, "Not enough arguments");
     }
 }
