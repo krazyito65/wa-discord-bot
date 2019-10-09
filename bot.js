@@ -74,10 +74,10 @@ bot.on('message', function (user, userID, channelID, message, event) {
     catch (error) { macros.push("/" + serverID, {}) }
     finally { serverMacros = macros.getData("/" + serverID) }
 
-    // var serverQuotes;
-    // try { serverQuotes = quotes.getData("/" + serverID) }
-    // catch (error) { quotes.push("/" + serverID, {}) }
-    // finally { serverQuotes = quotes.getData("/" + serverID) }
+    var serverQuotes;
+    try { serverQuotes = quotes.getData("/" + serverID) }
+    catch (error) { quotes.push("/" + serverID, {}) }
+    finally { serverQuotes = quotes.getData("/" + serverID) }
 
     //log(serverMacros)
     for (var i = 1; i < cmd.length; i++) {

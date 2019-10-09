@@ -19,7 +19,7 @@ module.exports = function (args, user, userID, channelID, bot){
 
 	if (!isMod) {
 		botFuncs.log(user + "denied macro command")
-		botFuncs.sendMsg(channelID, "You do not have permisson to use that"); 
+		botFuncs.sendMsg(channelID, "You do not have permisson to use that");
 		return
 	}
 
@@ -35,14 +35,14 @@ module.exports = function (args, user, userID, channelID, bot){
 		botFuncs.sendMsg(channelID, "Removed command: " + args[1])
 	} else if (args.length < 3 || ! isValidOption) {
 		if (! isValidOption) {
-			botFuncs.sendMsg(channelID, args[0] +" is not a valid option. Please use: add | remove | edit | + | -"); 
+			botFuncs.sendMsg(channelID, args[0] +" is not a valid option. Please use: add | remove | edit | + | -");
 			return
 		}
 		botFuncs.sendMsg(channelID, "Not enough arguments.\nUsage: $macro `(add/remove/edit)` `name` `output`")
 	} else {
 		var isAdd = /(add|\+)/.test(args[0])
 		var isEdit = /(edit)/.test(args[0])
-		
+
 
 
 		var output = '';
@@ -85,5 +85,5 @@ module.exports = function (args, user, userID, channelID, bot){
 function canManageMessages(client, userID, serverID) {
     var server = client.servers[serverID];
     var member = server.members[userID];
-    return member.roles.some( roleID => server.roles[roleID].TEXT_MANAGE_MESSAGES );
+    return member.roles.some( roleID => server.roles[roleID].TEXT_MANAGE_MESSAGES ) || member.roles.some(roleID => server.roles[roleID].name == "macros");
 }
