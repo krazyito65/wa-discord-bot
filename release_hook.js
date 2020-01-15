@@ -10,25 +10,34 @@ server.on('request', (req, response) => {
   // we should only get POSTS, so ignore everything else.
   response.writeHead(200,{"Content-Type":"application/json"});
   if (req.method == "POST") {
+    console.log("START==========================================================START")
     console.log("Got a post request. Doing stuff..")
     var git;
     var payload;
+    var body = '';
     req.on('data', (chunk) => {
-      git = JSON.parse(chunk)
-	  console.log("==========================================================")
-	  if (git.action != "published") {return}
+      body += chunk;
+    }).on('end', () => {
+      git = JSON.parse(body)
+      console.log("==========================================================")
+      console.log(git)
+      console.log("==========================================================")
+      if (git.action != "published" && git.action != "edited") {return}
       console.log(git.release.body)
-	  var body = git.release.body;
-	  if (body.length >= 2000) {
-		body = body.slice(0,1900);
-		body = body.replace(/\n.*$/, '');
-		body += "\n\n - [And more...](" + git.release.html_url + ")";
-	  }
+      body = git.release.body;
+      if (body.length >= 2000) {
+        body = body.slice(0,1900);
+        body = body.replace(/\n.*$/, '');
+        body += "\n\n - [And more...](" + git.release.html_url + ")";
+      }
+      username = "Release"
+      if (git.repository.name == "WeakAuras2") {username = "WeakAuras"}
+      if (git.repository.name == "WeakAuras-Companion") {username = "WeakAuras Companion"}
       payload = {
-        "username": "WeakAuras-Release",
+        "username": username,
         "avatar_url": "https://media.forgecdn.net/avatars/62/782/636142194921799650.png",
         "embeds": [{
-          "title": git.release.tag_name,
+          "title": "New Release: " + git.release.tag_name,
           "description": body,
           "url": git.release.html_url,
           "color": 1399932,
@@ -41,13 +50,13 @@ server.on('request', (req, response) => {
         body: payload,
         json: true
       })
-	  console.log("payload:")
-	  console.log(payload)
-	  ;
-    }).on('end', () => {
+      console.log("payload:")
+      console.log(payload);
+
       response.end("I got your response.");
+      console.log("end ========================================================== end")
     }).on('error', (e) => {
-      console.log(e)
+      console.log("Error on request: " + e)
     });
   }
   else {
