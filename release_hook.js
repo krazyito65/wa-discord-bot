@@ -22,7 +22,7 @@ server.on('request', (req, response) => {
       console.log("==========================================================")
       console.log(git)
       console.log("==========================================================")
-      if (git.action != "published" && git.action != "edited") {return}
+      if (git.action != "published") {return}
       console.log(git.release.body)
       body = git.release.body;
       if (body.length >= 2000) {
