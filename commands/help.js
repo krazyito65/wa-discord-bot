@@ -15,6 +15,11 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 			returnString += prefix + macro + ": " + serverMacros[macro] +"\n==================================================\n"
 		}
 
+		returnString = returnString.replace(/</g, "&lt;");
+		returnString = returnString.replace(/>/g, "&gt;");
+
+		returnString = "<head><meta charset=\"utf-8\"/></head><pre>" + returnString + "</pre>"
+
 		fsPath.writeFile("data/" + serverID, returnString, function(err){
 			botFuncs.log("Updated the macros info file for: " + serverID)
 		});
@@ -28,6 +33,11 @@ module.exports = function (args, macros, commands, user, userID, channelID, bot,
 		for (var quote in serverQuotes){
 			returnString += serverQuotes[quote] +"\n==================================================\n"
 		}
+
+		returnString = returnString.replace(/</g, "&lt;");
+		returnString = returnString.replace(/>/g, "&gt;");
+
+		returnString = "<head><meta charset=\"utf-8\"/></head><pre>" + returnString + "</pre>"
 
 		fsPath.writeFile("data/quotes/" + serverID, returnString, function(err){
 			botFuncs.log("Updated the quotes info file for: " + serverID)
