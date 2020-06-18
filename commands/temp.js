@@ -15,23 +15,25 @@ module.exports = function (args, user, userID, channelID, bot, sentAsCommand = t
         if (data) {
             //if its not a command (normal msg check) do the checks.
             args = args.toLowerCase()
-            var tempRegex = /(?:^|\s)(-?\d+\.?\d*)\s*°?\s*([cf])\b/
+           // var tempRegex = /(?:^|\s)(-?\d+\.?\d*)\s*°?\s*[^\n\r]([cf])\b/
+		   var tempRegex = /(?:^|\s)(-?\d+\.?\d*) ?°? ?([cf])\b/
             var containsTemp = tempRegex.test(args)
 
             if (containsTemp) {
-                var temp = tempRegex.exec(args)
+				var temp = tempRegex.exec(args)
+				temp[0] = temp[0].replace(/\s+/g, '')
                 botFuncs.log("converting temp: " + temp[0]);
 
                 // temp[0] = original capture
                 // temp[1] = number
                 // temp[2] = unit
-
-                if (temp[2] == 'f') {
+				var unit = temp[2] // == "°" ? temp[3] : temp[2] //isMember ? '$2.00' : '$10.00'
+                if (unit == 'f') {
                     botFuncs.sendMsg(channelID, "Temperature Conversion: " + temp[0].toUpperCase() + " is equal to " + fToC(temp[1]) + "C");
-                } else if (temp[2] == 'c') {
+                } else if (unit == 'c') {
                     botFuncs.sendMsg(channelID, "Temperature Conversion: " + temp[0].toUpperCase() + " is equal to " + cToF(temp[1]) + "F");
                 } else {
-                    botFuncs.log("unknown units... " + tempNumber);
+                    botFuncs.log("unknown units... " + unit);
                 }
             }
         }
