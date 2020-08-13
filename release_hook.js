@@ -25,7 +25,16 @@ server.on('request', (req, response) => {
       if (git.action != "published") {return}
       console.log(git.release.body)
       body = git.release.body;
-      if (body.length >= 2000) {
+
+	  var start_reg = /[\s\S]*## Highlights/g; // match the stuff at the start
+	  var start = body.match(start_reg)[0]; // save it
+
+
+	  var re = /[\s\S]*END PGP SIGNATURE-*/g; // match stuff at the start with a PGP signature to strip it out.
+	  body = body.replace(re, '');
+	  body = start + body
+
+	  if (body.length >= 2000) {
         body = body.slice(0,1900);
         body = body.replace(/\n.*$/, '');
         body += "\n\n - [And more...](" + git.release.html_url + ")";
