@@ -31,9 +31,13 @@ server.on('request', (req, response) => {
 
 
 	  var re = /[\s\S]*END PGP SIGNATURE-*/g; // match stuff at the start with a PGP signature to strip it out.
-	  body = body.replace(re, '');
-	  body = start + body
+	  var pgp_match = body.match(re);
 
+	  if (pgp_match){
+		   body = body.replace(re, '');
+		   body = start + body
+	  }
+	  
 	  if (body.length >= 2000) {
         body = body.slice(0,1900);
         body = body.replace(/\n.*$/, '');
