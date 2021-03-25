@@ -24,7 +24,7 @@
     "discord.io": "github:izy521/discord.io",
     "eslint": "^5.16.0",
     "fs": "0.0.1-security",
-    "fs-path": "0.0.24",
+    "fs-path": "0.0.25",
     "moment-timezone": "^0.5.31",
     "node-json-db": "^0.7.3",
     "pad": "^1.1.0",
