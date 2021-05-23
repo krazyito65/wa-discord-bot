@@ -8,3 +8,6 @@ Then use: `npm install` to install the dependencies for this bot, then run using
 `release_hook.js` is a seperate file to run with node (use forever to run 2 items easiy)
 
 The commands folder contains all the available commands.
+
+# DEPREACTAION NOTE
+discord.io is depreacted.  I have re-written this bot in ruby: https://github.com/krazyito65/ruby-wa-discord-bot
